@@ -1,6 +1,6 @@
-import AggregateRoot from "../../@shared/domain/entity/aggregate-root.interface";
-import BaseEntity from "../../@shared/domain/entity/base.entity";
-import Id from "../../@shared/domain/value-object/id.value-object";
+import { AggregateRoot } from "../../@shared/domain/entity/aggregate-root.interface";
+import { BaseEntity } from "../../@shared/domain/entity/base.entity";
+import { Id } from "../../@shared/domain/value-object/id.value-object";
 
 type TransactionProps = {
   id?: Id;
@@ -11,7 +11,7 @@ type TransactionProps = {
   updatedAt?: Date;
 };
 
-export default class Transaction extends BaseEntity implements AggregateRoot {
+export class Transaction extends BaseEntity implements AggregateRoot {
   private _amount: number;
   private _orderId: string;
   private _status: string;
@@ -24,21 +24,21 @@ export default class Transaction extends BaseEntity implements AggregateRoot {
     this.validate();
   }
 
-  validate(): void {
+  validate() {
     if (this._amount <= 0) {
       throw new Error("Amount must be greater than 0");
     }
   }
 
-  approve(): void {
+  approve() {
     this._status = "approved";
   }
 
-  decline(): void {
+  decline() {
     this._status = "declined";
   }
 
-  process(): void {
+  process() {
     if (this._amount >= 100) {
       this.approve();
     } else {
@@ -46,15 +46,15 @@ export default class Transaction extends BaseEntity implements AggregateRoot {
     }
   }
 
-  get amount(): number {
+  get amount() {
     return this._amount;
   }
 
-  get orderId(): string {
+  get orderId() {
     return this._orderId;
   }
 
-  get status(): string {
+  get status() {
     return this._status;
   }
 }
